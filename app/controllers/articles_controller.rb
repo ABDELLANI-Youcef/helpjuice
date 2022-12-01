@@ -5,7 +5,17 @@ class ArticlesController < ApplicationController
 
   # GET /articles or /articles.json
   def index
-    @articles = Article.all
+    @articles = if params[:query].present?
+                  Article.where('title LIKE ?', "#{params[:query]}%")
+                else
+                  Article.all
+                end
+
+    if turbo_frame_request?
+      render partial: 'articels', locals: { articles: @articles }
+    else
+      render :index
+    end
   end
 
   # GET /articles/1 or /articles/1.json
