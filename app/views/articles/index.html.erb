@@ -2,6 +2,11 @@
 
 <h1>Articles</h1>
 
+<%= form_with( url: articles_path , method: :get, data: { turbo_frame: 'articles'} ) do |form| %>
+  <%= form.label :query, "search by article title", class: 'block mb-2' %>
+  <%= form.text_field :query,class: 'py-3 px-4 rounded border ring-0 focus:ring-4 focus:ring-orange-100 focus:shadow-none focus:border-orange-500 focus:outline-none' %>
+<% end %>
+
 <div id="articles">
   <% @articles.each do |article| %>
     <%= render article %>
